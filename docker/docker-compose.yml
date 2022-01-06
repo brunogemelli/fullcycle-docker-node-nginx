@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx
+    ports:
+      - "8080:80"
+    networks:
+      - challenge_docker_nginx_node
+
+  node:
+    build:
+      context: ./node
+    container_name: node
+    volumes:
+      - ../html:/var/www/html
+    ports:
+      - "3000:3000"
+    networks:
+      - challenge_docker_nginx_node
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=test_db
+      - MYSQL_ROOT_PASSWORD=pw
+    networks:
+      - challenge_docker_nginx_node
+
+networks:
+  challenge_docker_nginx_node:
+    driver: bridge
