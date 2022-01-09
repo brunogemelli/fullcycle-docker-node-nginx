@@ -12,8 +12,6 @@ const mysql = require('mysql')
 
 app.get('/', (req,res) => {
     
-    let resultHtml = '<h1>Full Cycle Rocks!</h1>'
-
     //open the db connection
     const connection = mysql.createConnection(config)
 
@@ -28,7 +26,7 @@ app.get('/', (req,res) => {
 
 
     //insert a new item with the name "Test Bruno YYYY-MM-DD hh:mm:ss"
-    const newPersonSql = 'INSERT INTO people(name) values("Bruno Gemelli Test 1")'
+    const newPersonSql = 'INSERT INTO people(name) values("Bruno Gemelli - ' + new Date() + ' ")'
     connection.query(newPersonSql)
 
     
@@ -36,26 +34,25 @@ app.get('/', (req,res) => {
     const getPeopleSql = 'SELECT * FROM people'
     connection.query(getPeopleSql, function (err, result, fields) {
         if (err) throw err;
-        if (data.length == 0) {
+
+        let resultHtml = '<h1>Full Cycle Rocks!</h1>'
+        
+        if (result.length == 0) {
             resultHtml += '<p>The table is empty.</p>'
         } else {
             resultHtml += '<table>'
-            data.forEach(function(personData) {
+            result.forEach(function(personData) {
                 resultHtml += '<tr><td>' + personData.id + '</td><td>' + personData.name + '</td></tr>'
             })   
             resultHtml += '</table>'
         }
+
+        //close the db connection
+        connection.end()
+
+        //return the response (final HTML)
+        res.send(resultHtml)
     });
-
-    resultHtml += 'teste 3';
-
-
-    //close the db connection
-    connection.end()
-
-
-    //return the response (final HTML)
-    res.send(resultHtml)
 })
 
 app.listen(port, ()=> {
