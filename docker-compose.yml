@@ -18,7 +18,8 @@ services:
     image: brunogemelli/challenge_docker_node
     container_name: node
     volumes:
-      - .:/var/www/html
+      - ./node:/var/www/html
+      - challenge_docker_volume_node_modules:/var/www/html/node_modules
     ports:
       - "3000:3000"
     networks:
@@ -35,6 +36,9 @@ services:
       - MYSQL_ROOT_PASSWORD=pw
     networks:
       - challenge_docker_nginx_node
+
+volumes:
+  challenge_docker_volume_node_modules:
 
 networks:
   challenge_docker_nginx_node:
