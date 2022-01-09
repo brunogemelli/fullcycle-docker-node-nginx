@@ -16,7 +16,7 @@ services:
       context: ./node
     container_name: node
     volumes:
-      - ../html:/var/www/html
+      - .:/var/www/html
     ports:
       - "3000:3000"
     networks:
