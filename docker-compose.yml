@@ -5,6 +5,7 @@ services:
   nginx:
     build:
       context: ./nginx
+    image: brunogemelli/challenge_docker_nginx
     container_name: nginx
     ports:
       - "8080:80"
@@ -14,6 +15,7 @@ services:
   node:
     build:
       context: ./node
+    image: brunogemelli/challenge_docker_node
     container_name: node
     volumes:
       - .:/var/www/html
