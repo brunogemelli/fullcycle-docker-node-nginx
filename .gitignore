@@ -1,2 +1,2 @@
-docker/mysql/*
-html/node_modules/*
+mysql/*
+node_modules/*
